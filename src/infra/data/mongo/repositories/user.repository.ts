@@ -14,30 +14,40 @@ export class UserRepository implements IUserRepository {
     @InjectModel(User.name)
     private readonly _userModel: Model<UserDocument>,
   ) {}
-  async findAll(): Promise<ListAllUsersOutputDto[]> {
+  async findAll(): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]> {
     const doc = await this._userModel.find();
 
     return doc.map((user) => ({
-      nome: user.nome,
-      cpf: user.cpf,
-      curso: user.curso,
-      periodo: user.periodo,
-      matricula: user.matricula,
+      numeroContrato: user.numeroContrato,
+      nomeUsuario: user.nomeUsuario,
+      turma: user.turma,
+      telefone: user.telefone,
+      nomeEscola: user.nomeEscola,
+      email: user.email,
+      isAdm: user.isAdm,
+      foto: user.foto,
     }));
   }
   async createUser(input: CreateNewUserInput): Promise<void> {
     (await this._userModel.create({ ...input })).save();
   }
-  async findByUser({ cpf, nome }: FindByUserInput): Promise<FindByUserOutput> {
+  async findByUser({
+    nomeUsuario,
+    email,
+  }: FindByUserInput): Promise<FindByUserOutput> {
     const doc = await this._userModel.findOne({
-      $or: [{ nome }, { cpf }],
+      $or: [{ nomeUsuario }, { email }],
     });
     return doc
       ? {
-          nome: doc.nome,
-          cpf: doc.cpf,
-          matricula: doc.matricula,
-          curso: doc.curso,
+          email: doc.email,
+          foto: doc.foto,
+          isAdm: doc.isAdm,
+          nomeEscola: doc.nomeEscola,
+          nomeUsuario: doc.nomeUsuario,
+          numeroContrato: doc.numeroContrato,
+          telefone: doc.telefone,
+          turma: doc.turma,
           senha: doc.senha,
         }
       : undefined;

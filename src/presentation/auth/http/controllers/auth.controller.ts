@@ -8,7 +8,7 @@ import {
 } from '../dto/auth.request.dto';
 import { AuthApplication } from 'src/application/auth/auth.application';
 
-@Controller('v1/auth')
+@Controller('v1/autenticar')
 export class AuthController {
   constructor(private readonly _authApplication: AuthApplication) {}
 

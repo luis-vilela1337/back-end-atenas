@@ -1,10 +1,13 @@
 export type CreateNewUserInputDto = {
-  nome: string;
-  curso: string;
-  periodo: number;
-  cpf: string;
-  matricula: number;
+  numeroContrato: string;
+  nomeUsuario: string;
+  turma: string;
+  telefone: string;
+  nomeEscola: string;
+  email: string;
   senha: string;
+  isAdm: boolean;
+  foto: string;
 };
 
 export type CreateNewUserOutputDto = void;

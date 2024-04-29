@@ -1,16 +1,22 @@
-import { IsNumber, IsString } from 'class-validator';
+import { IsBoolean, IsString } from 'class-validator';
 
 export class CreateNewUserInputDto {
   @IsString()
-  nome: string;
+  numeroContrato: string;
   @IsString()
-  curso: string;
-  @IsNumber()
-  periodo: number;
+  nomeUsuario: string;
   @IsString()
-  cpf: string;
-  @IsNumber()
-  matricula: number;
+  turma: string;
+  @IsString()
+  telefone: string;
+  @IsString()
+  nomeEscola: string;
+  @IsString()
+  email: string;
   @IsString()
   senha: string;
+  @IsBoolean()
+  isAdm: boolean;
+  @IsString()
+  foto: string;
 }

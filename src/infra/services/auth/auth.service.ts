@@ -17,10 +17,10 @@ export class AuthService implements IAuthServiceProvider {
     private readonly _userRepository: IUserRepository,
   ) {}
   async validateAuth({ username, password }): Promise<{ username; password }> {
-    const addaptedCpf = cpf.format(username);
+    const email = username;
     const user = await this._userRepository.findByUser({
-      cpf: addaptedCpf,
-      nome: null,
+      email,
+      nomeUsuario: null,
     });
 
     if (!user) {
@@ -37,24 +37,28 @@ export class AuthService implements IAuthServiceProvider {
     }
 
     return {
-      username: user.nome,
+      username: user.nomeUsuario,
       password: password,
     };
   }
   async validateByUser({
-    cpf,
-    nome,
-  }): Promise<{ cpf: string; nome: string; matricula: string }> {
+    email,
+    nomeUsuario,
+  }): Promise<{ email: string; nomeUsuario: string; base64: string }> {
     const user = await this._userRepository.findByUser({
-      cpf: cpf,
-      nome: nome,
+      email,
+      nomeUsuario,
     });
 
     if (!user) {
       throw new UnauthorizedException('Usuario sem permissão');
     }
 
-    return { cpf, nome: user.nome, matricula: user.matricula };
+    return {
+      email: user.email,
+      nomeUsuario: user.nomeUsuario,
+      base64: user.foto,
+    };
   }
 
   generateToken({ username }: AuthServiceInputDto): AuthServiceOutputDto {

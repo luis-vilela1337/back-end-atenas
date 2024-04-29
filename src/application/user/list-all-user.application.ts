@@ -9,10 +9,14 @@ export class ListAllUsersApplication {
     try {
       const resp = await this._listAllUseCase.execute();
       return resp.map((el) => ({
-        nome: el.nome,
-        curso: el.curso,
-        cpf: el.cpf,
-        matricula: el.matricula,
+        numeroContrato: el.numeroContrato,
+        nomeUsuario: el.nomeUsuario,
+        turma: el.turma,
+        telefone: el.telefone,
+        nomeEscola: el.nomeEscola,
+        email: el.email,
+        isAdm: el.isAdm,
+        foto: el.foto,
       }));
     } catch (error) {
       throw error;

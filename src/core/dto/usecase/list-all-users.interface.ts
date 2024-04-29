@@ -1,6 +1,10 @@
 export type ListAllUsersOutputDto = {
-  nome: string;
-  curso: string;
-  cpf: string;
-  matricula: string;
+  numeroContrato: string;
+  nomeUsuario: string;
+  turma: string;
+  telefone: string;
+  nomeEscola: string;
+  email: string;
+  isAdm: boolean;
+  foto: string;
 };

@@ -10,25 +10,31 @@ export class User {
   id: string;
 
   @Prop()
-  nome: string;
+  numeroContrato: string;
 
   @Prop()
-  senha?: string;
+  nomeUsuario: string;
 
   @Prop()
-  cpf: string;
+  turma: string;
 
   @Prop()
-  isAdmin: boolean;
+  telefone: string;
 
   @Prop()
-  curso: string;
+  nomeEscola: string;
 
   @Prop()
-  periodo: number;
+  email: string;
 
   @Prop()
-  matricula: string;
+  senha: string;
+
+  @Prop()
+  isAdm: boolean;
+
+  @Prop()
+  foto: string;
 
   @Prop()
   createdAt: Date;

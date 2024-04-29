@@ -18,14 +18,14 @@ export class JwtService implements IJwtService {
     return await bcrypt.compare(password, hashedPassword);
   }
   async createToken({
-    cpf,
-    matricula,
-    nome,
+    base64,
+    email,
+    nomeUsuario,
   }: CreateTokenUserInputDto): Promise<CreateTokenUserOutputDto> {
     const token = await this._jwtService.signAsync({
-      cpf,
-      matricula,
-      nome,
+      base64,
+      email,
+      nomeUsuario,
     });
     return { token };
   }

@@ -1,7 +1,7 @@
 export type CreateTokenUserInputDto = {
-  nome: string;
-  cpf: string;
-  matricula: string;
+  nomeUsuario: string;
+  email: string;
+  base64: string;
 };
 
 export type CreateTokenUserOutputDto = {

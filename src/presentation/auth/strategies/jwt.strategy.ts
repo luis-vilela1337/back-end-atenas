@@ -13,12 +13,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(
-    payload: any,
-  ): Promise<{ cpf: string; nome: string; matricula: string }> {
+  async validate(payload: any): Promise<{
+    email: string;
+    nomeUsuario: string;
+    base64: string;
+  }> {
     const user = await this._authServiceProvider.validateByUser({
-      cpf: payload.cpf,
-      nome: payload.nome,
+      email: payload.email,
+      nomeUsuario: payload.nomeUsuario,
     });
 
     if (!user) {

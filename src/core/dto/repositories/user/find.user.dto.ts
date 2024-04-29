@@ -1,12 +1,16 @@
 export type FindByUserInput = {
-  nome: string;
-  cpf: string;
+  email: string;
+  nomeUsuario: string;
 };
 
 export type FindByUserOutput = {
-  nome: string;
-  cpf: string;
-  matricula: string;
-  curso: string;
+  numeroContrato: string;
+  nomeUsuario: string;
+  turma: string;
+  telefone: string;
+  nomeEscola: string;
+  email: string;
   senha: string;
+  isAdm: boolean;
+  foto: string;
 };

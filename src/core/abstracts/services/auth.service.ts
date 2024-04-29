@@ -9,9 +9,12 @@ export abstract class IAuthServiceProvider {
     username: string;
     password: string;
   }): Promise<{ username: string; password: string }>;
-  abstract validateByUser(input: { nome: string; cpf: string }): Promise<{
-    nome: string;
-    cpf: string;
-    matricula: string;
+  abstract validateByUser(input: {
+    nomeUsuario: string;
+    email: string;
+  }): Promise<{
+    email: string;
+    nomeUsuario: string;
+    base64: string;
   }>;
 }
