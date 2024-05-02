@@ -1,6 +1,6 @@
 import { CreateNewUserApplication } from '@application/user/create-new-user.application';
 import { ListAllUsersApplication } from '@application/user/list-all-user.application';
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '@presentation/auth/guards/jwt.guard';
 import { CreateNewUserInputDto } from '@presentation/user/dto/create-new-user.dto';
 import { ListAllUsersOutputDto } from '@presentation/user/dto/list-all-users.dto';
@@ -20,7 +20,10 @@ export class UserController {
 
   @Get('getAll')
   @UseGuards(JwtAuthGuard)
-  async listAllUser(): Promise<ListAllUsersOutputDto[]> {
-    return await this._listAllUser.execute();
+  async listAllUser(
+    @Query() skip: string,
+    @Query() limit: string,
+  ): Promise<ListAllUsersOutputDto[]> {
+    return await this._listAllUser.execute({ skip, limit });
   }
 }

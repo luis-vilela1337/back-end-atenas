@@ -8,5 +8,8 @@ import { ListAllUsersOutputDto } from '@core/dto/repositories/user/list-all.dto'
 export abstract class IUserRepository {
   abstract createUser(input: CreateNewUserInput): Promise<void>;
   abstract findByUser(input: FindByUserInput): Promise<FindByUserOutput>;
-  abstract findAll(): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]>;
+  abstract findAll({
+    skip,
+    limit,
+  }): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]>;
 }

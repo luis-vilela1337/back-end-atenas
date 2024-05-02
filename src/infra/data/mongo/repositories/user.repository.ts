@@ -14,8 +14,11 @@ export class UserRepository implements IUserRepository {
     @InjectModel(User.name)
     private readonly _userModel: Model<UserDocument>,
   ) {}
-  async findAll(): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]> {
-    const doc = await this._userModel.find();
+  async findAll({
+    skip,
+    limit,
+  }): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]> {
+    const doc = await this._userModel.find().skip(skip).limit(limit);
 
     return doc.map((user) => ({
       numeroContrato: user.numeroContrato,

@@ -5,8 +5,8 @@ import { Injectable } from '@nestjs/common';
 @Injectable()
 export class ListAllUseCase {
   constructor(private readonly _userRepo: IUserRepository) {}
-  async execute(): Promise<ListAllUsersOutputDto[]> {
-    const users = await this._userRepo.findAll();
+  async execute({ skip, limit }): Promise<ListAllUsersOutputDto[]> {
+    const users = await this._userRepo.findAll({ skip, limit });
     return users;
   }
 }
