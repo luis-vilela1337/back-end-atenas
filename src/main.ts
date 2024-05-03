@@ -20,7 +20,7 @@ async function bootstrap() {
   const payloadSize = Number(process.env.PAYLOAD_SIZE_MB);
   app.use(bodyParser.json({ limit: `${payloadSize}mb` }));
   app.use(bodyParser.urlencoded({ limit: `${payloadSize}mb`, extended: true }));
-
+  app.enableCores({})
   configClassValidator(app);
 
   await app.listen(process.env.PORT || 3000, '0.0.0.0');

@@ -5,7 +5,7 @@ import { UpdateUserApplication } from '@application/user/update-user.application
 import {
   Body,
   Controller,
-  Delete,
+  Patch,
   Get,
   Post,
   Put,
@@ -49,7 +49,7 @@ export class UserController {
     return await this._updateUser.execute(input);
   }
 
-  @Delete()
+  @Patch()
   @UseGuards(JwtAuthGuard)
   async deleteUser(@Body() input: DeleteUserInputDto) {
     return await this._deleteUser.execute(input);
