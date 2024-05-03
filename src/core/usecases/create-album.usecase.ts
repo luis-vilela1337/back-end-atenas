@@ -1,0 +1,12 @@
+import { IALbumRepository } from '@core/abstracts/services/album.repository';
+import { ICreateAlbumUseCase } from '@core/abstracts/usecases/create-album.usecase';
+import { CreateAlbumInputDto } from '@core/dto/usecase/create-album.usecase';
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class CreateAlbumUseCase implements ICreateAlbumUseCase {
+  constructor(private readonly _albumRepository: IALbumRepository) {}
+  async execute(input: CreateAlbumInputDto): Promise<void> {
+    return a;
+  }
+}
