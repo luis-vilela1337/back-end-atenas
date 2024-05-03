@@ -7,6 +7,7 @@ import { UpdateUserApplication } from '@application/user/update-user.application
 import { DeleteUserApplication } from '@application/user/delete-user.application';
 import { CreateAlbumApplication } from '@application/album/create-album.application';
 import { ListUserApplication } from '@application/user/list-user.application';
+import { ListAllAlbumApplication } from '@application/album/list-all-album.application';
 
 @Module({
   imports: [CoreModule],
@@ -18,6 +19,7 @@ import { ListUserApplication } from '@application/user/list-user.application';
     DeleteUserApplication,
     CreateAlbumApplication,
     ListUserApplication,
+    ListAllAlbumApplication,
   ],
   exports: [
     AuthApplication,
@@ -27,6 +29,7 @@ import { ListUserApplication } from '@application/user/list-user.application';
     DeleteUserApplication,
     CreateAlbumApplication,
     ListUserApplication,
+    ListAllAlbumApplication,
   ],
 })
 export class ApplicationModule {}

@@ -12,7 +12,7 @@ export class CreateAlbumUseCase implements ICreateAlbumUseCase {
       numeroContrato: input.numeroContrato,
     });
 
-    if (!hasAlbum) {
+    if (hasAlbum) {
       throw new BadRequestException('Album ja existe');
     }
 

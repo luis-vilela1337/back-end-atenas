@@ -1,4 +1,4 @@
-import { IsObject, IsString } from 'class-validator';
+import { ArrayMinSize, IsArray, IsString } from 'class-validator';
 
 export class CreateAlbumInputDto {
   @IsString()
@@ -7,8 +7,8 @@ export class CreateAlbumInputDto {
   nomeAluno: string;
   @IsString()
   tipoAlbum: string;
-  @IsString()
+  @IsArray()
+  @IsString({ each: true })
+  @ArrayMinSize(1)
   evento: string[];
-  @IsString()
-  fotos: string[];
 }
