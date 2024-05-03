@@ -5,6 +5,7 @@ import { CreateNewUserUseCase } from '@core/usecases/create-new-user.usecase';
 import { ListAllUseCase } from '@core/usecases/list-all-users.usecase';
 import { UpdateUserUseCase } from '@core/usecases/update-user.usecase';
 import { DeleteUserUseCase } from '@core/usecases/delete-user.usecase';
+import { CreateAlbumUseCase } from '@core/usecases/create-album.usecase';
 
 @Module({
   imports: [InfraModule],
@@ -14,6 +15,7 @@ import { DeleteUserUseCase } from '@core/usecases/delete-user.usecase';
     ListAllUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
+    CreateAlbumUseCase,
   ],
   exports: [
     AuthUseCase,
@@ -21,6 +23,7 @@ import { DeleteUserUseCase } from '@core/usecases/delete-user.usecase';
     ListAllUseCase,
     DeleteUserUseCase,
     UpdateUserUseCase,
+    CreateAlbumUseCase,
   ],
 })
 export class CoreModule {}

@@ -2,7 +2,7 @@ import { CreateAlbumApplication } from '@application/album/create-album.applicat
 import { Body, Controller, Post } from '@nestjs/common';
 import { CreateAlbumInputDto } from '@presentation/user/dto/album/create-album.dto';
 
-@Controller()
+@Controller('v1/albuns')
 export class AlbumController {
   constructor(private readonly _createAlbum: CreateAlbumApplication) {}
   @Post()

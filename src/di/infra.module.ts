@@ -1,6 +1,9 @@
+import { IALbumRepository } from '@core/abstracts/services/album.repository';
 import { IAuthServiceProvider } from '@core/abstracts/services/auth.service';
 import { IJwtService } from '@core/abstracts/services/jwt-crypt.service';
 import { IUserRepository } from '@core/abstracts/services/user.repository';
+import { Album, AlbumSchema } from '@infrastructure/data/mongo/entities/album';
+import { AlbumRepository } from '@infrastructure/data/mongo/repositories/album.repository';
 import { UserRepository } from '@infrastructure/data/mongo/repositories/user.repository';
 import { JwtService } from '@infrastructure/services/jwt.service';
 import { Module } from '@nestjs/common';
@@ -19,6 +22,10 @@ const providers = [
     provide: IUserRepository,
   },
   {
+    useClass: AlbumRepository,
+    provide: IALbumRepository,
+  },
+  {
     useClass: JwtService,
     provide: IJwtService,
   },
@@ -32,6 +39,7 @@ const providers = [
       },
     }),
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
+    MongooseModule.forFeature([{ name: Album.name, schema: AlbumSchema }]),
   ],
   providers,
   exports: providers.map((el) => el.provide),
