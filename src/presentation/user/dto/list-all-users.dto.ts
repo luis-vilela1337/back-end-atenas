@@ -7,5 +7,5 @@ export class ListAllUsersOutputDto {
   email: string;
   isAdm: boolean;
   foto: string;
-  createdAt: Date;
+  createdAt: string;
 }

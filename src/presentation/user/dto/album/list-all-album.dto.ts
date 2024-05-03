@@ -12,4 +12,5 @@ export class ListAllAlbumOutputDto {
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
+  createdAt: string;
 }

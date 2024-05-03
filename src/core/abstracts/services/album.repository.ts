@@ -24,6 +24,7 @@ export type FindAllOutputDto = {
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
+  createdAt: Date;
   // fotos: string[];
 }[];
 export abstract class IALbumRepository {

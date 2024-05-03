@@ -1,7 +1,7 @@
 import { ListAllUseCase } from '@core/usecases/list-all-users.usecase';
 import { Injectable } from '@nestjs/common';
 import { ListAllUsersOutputDto } from '@presentation/user/dto/list-all-users.dto';
-
+import { format } from 'date-fns';
 @Injectable()
 export class ListAllUsersApplication {
   constructor(private readonly _listAllUseCase: ListAllUseCase) {}
@@ -21,7 +21,7 @@ export class ListAllUsersApplication {
         email: el.email,
         isAdm: el.isAdm,
         foto: el.foto,
-        createdAt: el.createdAt,
+        createdAt: format(el.createdAt, 'dd/MM/yyyy'),
       }));
     } catch (error) {
       throw error;

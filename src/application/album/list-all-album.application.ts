@@ -5,13 +5,18 @@ import {
   ListAllAlbumInputDto,
   ListAllAlbumOutputDto,
 } from '@presentation/user/dto/album/list-all-album.dto';
+import { format } from 'date-fns';
 
 @Injectable()
 export class ListAllAlbumApplication {
   constructor(private readonly _listAllAlbum: ListAllAlbumUseCase) {}
   async execute(input: ListAllAlbumInputDto): Promise<ListAllAlbumOutputDto[]> {
     try {
-      return await this._listAllAlbum.execute(input);
+      const response = await this._listAllAlbum.execute(input);
+      return response.map((el) => ({
+        ...el,
+        createdAt: format(el.createdAt, 'dd/MM/yyyy'),
+      }));
     } catch (e) {
       throw e;
     }
