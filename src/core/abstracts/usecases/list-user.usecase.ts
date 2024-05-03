@@ -1,17 +1,18 @@
-export type FindByUserInput = {
-  email: string;
+export type ListUserInputDto = {
   nomeUsuario: string;
+  email: string;
 };
-
-export type FindByUserOutput = {
+export type ListUserOutputDto = {
   numeroContrato: string;
   nomeUsuario: string;
   turma: string;
   telefone: string;
   nomeEscola: string;
   email: string;
-  senha: string;
   isAdm: boolean;
   foto: string;
   createdAt: Date;
 };
+export abstract class IListUserUseCase {
+  abstract execute(input: ListUserInputDto): Promise<ListUserOutputDto>;
+}

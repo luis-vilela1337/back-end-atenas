@@ -1,6 +1,7 @@
 import { CreateNewUserApplication } from '@application/user/create-new-user.application';
 import { DeleteUserApplication } from '@application/user/delete-user.application';
 import { ListAllUsersApplication } from '@application/user/list-all-user.application';
+import { ListUserApplication } from '@application/user/list-user.application';
 import { UpdateUserApplication } from '@application/user/update-user.application';
 import {
   Body,
@@ -23,6 +24,7 @@ export class UserController {
   constructor(
     private readonly _createUserApplication: CreateNewUserApplication,
     private readonly _listAllUser: ListAllUsersApplication,
+    private readonly _listUser: ListUserApplication,
     private readonly _updateUser: UpdateUserApplication,
     private readonly _deleteUser: DeleteUserApplication,
   ) {}
@@ -33,7 +35,7 @@ export class UserController {
     return await this._createUserApplication.execute(input);
   }
 
-  @Get('getAll/')
+  @Get('getAll')
   @UseGuards(JwtAuthGuard)
   async listAllUser(
     @Query() username: string,
@@ -41,6 +43,15 @@ export class UserController {
     @Query() limit: number,
   ): Promise<ListAllUsersOutputDto[]> {
     return await this._listAllUser.execute({ skip, limit, username });
+  }
+
+  @Get()
+  @UseGuards(JwtAuthGuard)
+  async listUser(
+    @Query() username: string,
+    @Query() email: string,
+  ): Promise<ListAllUsersOutputDto> {
+    return await this._listUser.execute({ nomeUsuario: username, email });
   }
 
   @Put()
