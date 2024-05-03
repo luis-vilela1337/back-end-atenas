@@ -48,10 +48,9 @@ export class UserController {
   @Get()
   @UseGuards(JwtAuthGuard)
   async listUser(
-    @Query() username: string,
-    @Query() email: string,
+    @Body() input: { nomeUsuario: string; email: string },
   ): Promise<ListAllUsersOutputDto> {
-    return await this._listUser.execute({ nomeUsuario: username, email });
+    return await this._listUser.execute(input);
   }
 
   @Put()

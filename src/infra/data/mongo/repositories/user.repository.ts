@@ -69,6 +69,7 @@ export class UserRepository implements IUserRepository {
           telefone: doc.telefone,
           turma: doc.turma,
           senha: doc.senha,
+          createdAt: doc.createdAt,
         }
       : undefined;
   }
