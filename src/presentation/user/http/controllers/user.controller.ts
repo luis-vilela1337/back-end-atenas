@@ -45,7 +45,7 @@ export class UserController {
     return await this._listAllUser.execute({ skip, limit, username });
   }
 
-  @Get()
+  @Post()
   @UseGuards(JwtAuthGuard)
   async listUser(
     @Body() input: { nomeUsuario: string; email: string },

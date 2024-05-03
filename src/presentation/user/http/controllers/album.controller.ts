@@ -18,7 +18,7 @@ export class AlbumController {
     return await this._createAlbum.execute(input);
   }
 
-  @Get('getAll')
+  @Post('getAll')
   async listAllAlbum(
     @Body() input: ListAllAlbumInputDto,
   ): Promise<ListAllAlbumOutputDto[]> {
