@@ -1,12 +1,12 @@
-export type ListAllUsersOutputDto = {
+export type UpdateUserInputDto = {
   numeroContrato: string;
   nomeUsuario: string;
   turma: string;
   telefone: string;
   nomeEscola: string;
   email: string;
-  senha: string;
   isAdm: boolean;
   foto: string;
-  createdAt: Date;
 };
+
+export type UpdateUserOutputDto = void;

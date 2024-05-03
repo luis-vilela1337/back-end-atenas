@@ -7,4 +7,5 @@ export type ListAllUsersOutputDto = {
   email: string;
   isAdm: boolean;
   foto: string;
+  createdAt: Date;
 };
