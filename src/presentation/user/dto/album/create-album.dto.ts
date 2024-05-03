@@ -7,13 +7,8 @@ export class CreateAlbumInputDto {
   nomeAluno: string;
   @IsString()
   tipoAlbum: string;
-  @IsObject()
-  evento: Array<Evento>;
-}
-
-export class Evento {
   @IsString()
-  tipoEvento: string;
+  evento: string[];
   @IsString()
-  fotos: Array<string>;
+  fotos: string[];
 }
