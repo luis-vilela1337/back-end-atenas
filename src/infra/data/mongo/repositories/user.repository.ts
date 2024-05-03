@@ -25,9 +25,9 @@ export class UserRepository implements IUserRepository {
     skip,
     username,
   }: FindAllInput): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]> {
-    let query = {};
+    const query = {};
     if (username) {
-      query = { nomeUsuario: { $regex: new RegExp(username, 'i') } };
+      // query = { nomeUsuario: { $regex: new RegExp(username, 'i') } };
     }
 
     const doc = await this._userModel
