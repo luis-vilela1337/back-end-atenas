@@ -8,9 +8,16 @@ import { DeleteUserApplication } from '@application/user/delete-user.application
 import { CreateAlbumApplication } from '@application/album/create-album.application';
 import { ListUserApplication } from '@application/user/list-user.application';
 import { ListAllAlbumApplication } from '@application/album/list-all-album.application';
+import { MulterModule } from '@nestjs/platform-express';
+import { memoryStorage } from 'multer';
 
 @Module({
-  imports: [CoreModule],
+  imports: [
+    CoreModule,
+    MulterModule.register({
+      storage: memoryStorage(),
+    }),
+  ],
   providers: [
     AuthApplication,
     CreateNewUserApplication,

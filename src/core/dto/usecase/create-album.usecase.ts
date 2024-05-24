@@ -3,7 +3,7 @@ export type CreateAlbumInputDto = {
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
-  fotos: string[];
+  fotos: Express.Multer.File[];
 };
 
 export type CreateAlbumOutputDto = void;

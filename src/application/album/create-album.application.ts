@@ -4,9 +4,12 @@ import { CreateAlbumInputDto } from '@presentation/user/dto/album/create-album.d
 @Injectable()
 export class CreateAlbumApplication {
   constructor(private readonly _createAlbum: CreateAlbumUseCase) {}
-  async execute(input: CreateAlbumInputDto): Promise<void> {
+  async execute(
+    input: CreateAlbumInputDto,
+    fotos: Array<Express.Multer.File>,
+  ): Promise<void> {
     try {
-      await this._createAlbum.execute({ ...input, fotos: [] });
+      return await this._createAlbum.execute({ ...input, fotos });
     } catch (error) {
       throw error;
     }

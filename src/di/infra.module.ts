@@ -1,11 +1,13 @@
 import { IALbumRepository } from '@core/abstracts/services/album.repository';
 import { IAuthServiceProvider } from '@core/abstracts/services/auth.service';
 import { IJwtService } from '@core/abstracts/services/jwt-crypt.service';
+import { IStorageService } from '@core/abstracts/services/storage.service';
 import { IUserRepository } from '@core/abstracts/services/user.repository';
 import { Album, AlbumSchema } from '@infrastructure/data/mongo/entities/album';
 import { AlbumRepository } from '@infrastructure/data/mongo/repositories/album.repository';
 import { UserRepository } from '@infrastructure/data/mongo/repositories/user.repository';
 import { JwtService } from '@infrastructure/services/jwt.service';
+import { StorageService } from '@infrastructure/services/storage.service';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -28,6 +30,10 @@ const providers = [
   {
     useClass: JwtService,
     provide: IJwtService,
+  },
+  {
+    useClass: StorageService,
+    provide: IStorageService,
   },
 ];
 @Module({
