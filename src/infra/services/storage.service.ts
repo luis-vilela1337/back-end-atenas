@@ -16,7 +16,6 @@ export class StorageService implements IStorageService {
     this._bucketName = process.env.BUCKETNAME;
   }
   private async _getSignedUrl(fileName: string): Promise<string> {
-    const aaa = process.env.DATE_EXPIRED;
     const options: GetSignedUrlConfig = {
       version: 'v2',
       action: 'read',
@@ -41,7 +40,7 @@ export class StorageService implements IStorageService {
 
   async upload({ contrato, fotos, nomeAluno }: UploadInput): Promise<string[]> {
     const urls = fotos.map(async (foto) => {
-      const filename = `./${contrato}+${nomeAluno}/${foto.originalname}`;
+      const filename = `${contrato}+${nomeAluno}/${foto.originalname}`;
       await this._saveBucketFile(filename, foto.buffer);
 
       return await this._getSignedUrl(filename);
