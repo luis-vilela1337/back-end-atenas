@@ -1,5 +1,4 @@
 import { ListAllAlbumUseCase } from '@core/usecases/list-all-album.usecase';
-import { ListAllUseCase } from '@core/usecases/list-all-users.usecase';
 import { Injectable } from '@nestjs/common';
 import {
   ListAllAlbumInputDto,

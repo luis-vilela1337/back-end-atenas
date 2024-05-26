@@ -4,7 +4,7 @@ export class ListAllAlbumInputDto {
   @IsNumber()
   limit: number;
   @IsNumber()
-  skip: number;
+  offset: number;
 }
 
 export class ListAllAlbumOutputDto {
@@ -12,5 +12,6 @@ export class ListAllAlbumOutputDto {
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
+  fotos: string[];
   createdAt: string;
 }

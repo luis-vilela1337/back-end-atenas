@@ -2,7 +2,6 @@ import { IJwtService } from '@core/abstracts/services/jwt-crypt.service';
 import { IUserRepository } from '@core/abstracts/services/user.repository';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { cpf } from 'cpf-cnpj-validator';
 import { IAuthServiceProvider } from 'src/core/abstracts/services/auth.service';
 import {
   AuthServiceInputDto,

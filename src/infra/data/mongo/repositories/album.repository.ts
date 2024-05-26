@@ -1,9 +1,8 @@
 import {
   CreateAlbumInputDto,
-  FindAlbunsOutputDto,
   FindAllInputDto,
-  FindAllOutputDto,
   FindByAlbumnInputDto,
+  FindOutputDto,
   IALbumRepository,
 } from '@core/abstracts/services/album.repository';
 import { InjectModel } from '@nestjs/mongoose';
@@ -26,7 +25,7 @@ export class AlbumRepository implements IALbumRepository {
   async findByAlbum({
     nomeAluno,
     numeroContrato,
-  }: FindByAlbumnInputDto): Promise<FindAlbunsOutputDto> {
+  }: FindByAlbumnInputDto): Promise<FindOutputDto> {
     const doc = await this._albumModel.findOne({
       $and: [{ numeroContrato }, { nomeAluno }],
     });
@@ -35,21 +34,28 @@ export class AlbumRepository implements IALbumRepository {
           numeroContrato: doc.numeroContrato,
           nomeAluno: doc.nomeAluno,
           tipoAlbum: doc.tipoAlbum,
+          fotos: doc.fotos,
           evento: doc.evento,
+          createdAt: doc.createdAt,
         }
       : undefined;
   }
   updateAlbum(input: any): Promise<any> {
     throw new Error('Method not implemented.');
   }
-  deleteAlbum(input: any): Promise<any> {
-    throw new Error('Method not implemented.');
+
+  async deleteAlbum(input: any): Promise<boolean> {
+    const doc = await this._albumModel.findOneAndDelete({
+      $and: [{ nomeUsuario: input.nomeUsuario }, { email: input.email }],
+    });
+
+    return !!doc;
   }
-  async findAll({ limit, skip }: FindAllInputDto): Promise<FindAllOutputDto> {
+  async findAll({ limit, offset }: FindAllInputDto): Promise<FindOutputDto[]> {
     const doc = await this._albumModel
       .find({})
       .limit(limit)
-      .skip((skip - 1) * limit)
+      .skip((offset - 1) * limit)
       .exec();
 
     return doc.map((album) => ({
@@ -57,6 +63,7 @@ export class AlbumRepository implements IALbumRepository {
       nomeAluno: album.nomeAluno,
       tipoAlbum: album.numeroContrato,
       evento: album.evento.map((e) => e),
+      fotos: album.fotos.map((e) => e),
       createdAt: album.createdAt,
     }));
   }

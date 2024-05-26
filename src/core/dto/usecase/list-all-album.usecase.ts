@@ -3,5 +3,11 @@ export type ListAllAlbumOutputDto = {
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
-  createdAt: Date;
+  fotos: string[];
+  createdAt: string | Date;
+};
+
+export type ListAllbumInput = {
+  nomeAluno: string;
+  numeroContrato: string;
 };

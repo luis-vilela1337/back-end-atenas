@@ -14,23 +14,24 @@ export type FindAlbunsOutputDto = {
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
+  fotos: string[];
 };
 export type FindAllInputDto = {
   limit: number;
-  skip: number;
+  offset: number;
 };
-export type FindAllOutputDto = {
+export type FindOutputDto = {
   numeroContrato: string;
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
   createdAt: Date;
-  // fotos: string[];
-}[];
+  fotos: string[];
+};
 export abstract class IALbumRepository {
   abstract createAlbum(input: CreateAlbumInputDto): Promise<void>;
   abstract updateAlbum(input: any): Promise<any>;
-  abstract deleteAlbum(input: any): Promise<any>;
-  abstract findByAlbum(input: FindByAlbumnInputDto): Promise<any>;
-  abstract findAll(input: FindAllInputDto): Promise<FindAllOutputDto>;
+  abstract deleteAlbum(input: FindByAlbumnInputDto): Promise<boolean>;
+  abstract findByAlbum(input: FindByAlbumnInputDto): Promise<FindOutputDto>;
+  abstract findAll(input: FindAllInputDto): Promise<FindOutputDto[]>;
 }

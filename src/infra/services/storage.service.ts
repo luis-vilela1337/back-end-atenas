@@ -9,10 +9,7 @@ export class StorageService implements IStorageService {
     private readonly _storage: Storage,
     private readonly _bucketName: string,
   ) {
-    this._storage = new Storage({
-      projectId: process.env.PROJECT_ID,
-      keyFilename: 'mykey.json',
-    });
+    this._storage = new Storage();
     this._bucketName = process.env.BUCKETNAME;
   }
   private async _getSignedUrl(fileName: string): Promise<string> {
