@@ -1,5 +1,6 @@
 import {
   CreateAlbumInputDto,
+  FindAllAlbuns,
   FindAllInputDto,
   FindByAlbumnInputDto,
   FindOutputDto,
@@ -51,20 +52,35 @@ export class AlbumRepository implements IALbumRepository {
 
     return !!doc;
   }
-  async findAll({ limit, offset }: FindAllInputDto): Promise<FindOutputDto[]> {
-    const doc = await this._albumModel
-      .find({})
-      .limit(limit)
-      .skip((offset - 1) * limit)
-      .exec();
+  async findAll({
+    limit,
+    skip,
+    nomeUsuario = '',
+  }: FindAllInputDto): Promise<FindAllAlbuns> {
+    const doc = await this._albumModel.aggregate([
+      {
+        $match: {
+          nomeAluno: { $regex: nomeUsuario, $options: 'i' },
+        },
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'totalCount' }],
+          data: [{ $skip: (skip - 1) * limit }, { $limit: limit }],
+        },
+      },
+    ]);
 
-    return doc.map((album) => ({
-      numeroContrato: album.numeroContrato,
-      nomeAluno: album.nomeAluno,
-      tipoAlbum: album.numeroContrato,
-      evento: album.evento.map((e) => e),
-      fotos: album.fotos.map((e) => e),
-      createdAt: album.createdAt,
-    }));
+    return {
+      albuns: doc[0].data.map((album: FindOutputDto) => ({
+        numeroContrato: album.numeroContrato,
+        nomeAluno: album.nomeAluno,
+        tipoAlbum: album.tipoAlbum,
+        evento: album.evento,
+        createdAt: album.createdAt,
+        fotos: album.fotos,
+      })),
+      count: doc[0].metadata[0].totalCount,
+    };
   }
 }

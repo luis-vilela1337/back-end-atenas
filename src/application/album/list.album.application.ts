@@ -1,6 +1,6 @@
-import { ListAllAlbumOutputDto } from '@core/dto/usecase/list-all-album.usecase';
 import { ListAlbumUseCase } from '@core/usecases/list-album.usecase';
 import { Injectable } from '@nestjs/common';
+import { ListAllbumDto } from '@presentation/user/dto/album/list-all-album.dto';
 import { format } from 'date-fns';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class ListAlbumApplication {
   async execute(
     nomeUsuario: string,
     numeroContrato: string,
-  ): Promise<ListAllAlbumOutputDto> {
+  ): Promise<ListAllbumDto> {
     try {
       const response = await this._listAlbum.execute({
         nomeAluno: nomeUsuario,

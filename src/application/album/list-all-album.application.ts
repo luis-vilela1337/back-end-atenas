@@ -9,13 +9,21 @@ import { format } from 'date-fns';
 @Injectable()
 export class ListAllAlbumApplication {
   constructor(private readonly _listAllAlbum: ListAllAlbumUseCase) {}
-  async execute(input: ListAllAlbumInputDto): Promise<ListAllAlbumOutputDto[]> {
+  async execute(input: ListAllAlbumInputDto): Promise<ListAllAlbumOutputDto> {
     try {
-      const response = await this._listAllAlbum.execute(input);
-      return response.map((el) => ({
-        ...el,
-        createdAt: format(el.createdAt, 'dd/MM/yyyy'),
-      }));
+      const { albuns, count } = await this._listAllAlbum.execute({
+        limit: input.limit,
+        nomeUsuario: input.nomeUsuario,
+        skip: input.offset,
+      });
+
+      return {
+        albuns: albuns.map((album) => ({
+          ...album,
+          createdAt: format(album.createdAt, 'dd/MM/yyyy'),
+        })),
+        count,
+      };
     } catch (e) {
       throw e;
     }

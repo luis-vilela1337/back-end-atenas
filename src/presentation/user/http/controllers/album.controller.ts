@@ -12,6 +12,7 @@ import {
   HttpStatus,
   Param,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { CreateAlbumInputDto } from '@presentation/user/dto/album/create-album.dto';
 import { ListAllAlbumOutputDto } from '@presentation/user/dto/album/list-all-album.dto';
@@ -56,13 +57,14 @@ export class AlbumController {
     return await this._createAlbum.execute(input, image);
   }
 
-  @Get('getAll')
-  @UseGuards(JwtAuthGuard)
+  @Get('getAll/:offset/:limit')
+  // @UseGuards(JwtAuthGuard)
   async listAllAlbum(
     @Param('offset') offset: number,
     @Param('limit') limit: number,
-  ): Promise<ListAllAlbumOutputDto[]> {
-    return await this._listAllAlbum.execute({ limit, offset });
+    @Query('nomeUsuario') nomeUsuario: string,
+  ): Promise<ListAllAlbumOutputDto> {
+    return await this._listAllAlbum.execute({ limit, offset, nomeUsuario });
   }
 
   @Get()
