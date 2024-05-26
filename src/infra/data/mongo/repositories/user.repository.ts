@@ -10,7 +10,10 @@ import {
 import { InjectModel } from '@nestjs/mongoose';
 import { User, UserDocument } from '../entities/user';
 import { Model } from 'mongoose';
-import { ListAllUsersOutputDto } from '@core/dto/repositories/user/list-all.dto';
+import {
+  ListAllUsersOutputDto,
+  UserRepositoryDto,
+} from '@core/dto/repositories/user/list-all.dto';
 import { UpdateUserInput } from '@core/dto/repositories/user/update-user.dto';
 import { DeleteUserInputDto } from '@core/dto/usecase/delete-user.usecase';
 
@@ -23,30 +26,37 @@ export class UserRepository implements IUserRepository {
   async findAll({
     limit,
     skip,
-    username,
-  }: FindAllInput): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]> {
-    const query = {};
-    if (username) {
-      // query = { nomeUsuario: { $regex: new RegExp(username, 'i') } };
-    }
+    username = '',
+  }: FindAllInput): Promise<ListAllUsersOutputDto> {
+    const doc = await this._userModel.aggregate([
+      {
+        $match: {
+          nomeUsuario: { $regex: username, $options: 'i' },
+        },
+      },
+      {
+        $facet: {
+          metadata: [{ $count: 'totalCount' }],
+          data: [{ $skip: (skip - 1) * limit }, { $limit: limit }],
+        },
+      },
+    ]);
 
-    const doc = await this._userModel
-      .find(query)
-      .limit(limit)
-      .skip((skip - 1) * limit)
-      .exec();
-
-    return doc.map((user) => ({
-      numeroContrato: user.numeroContrato,
-      nomeUsuario: user.nomeUsuario,
-      turma: user.turma,
-      telefone: user.telefone,
-      nomeEscola: user.nomeEscola,
-      email: user.email,
-      isAdm: user.isAdm,
-      foto: user.foto,
-      createdAt: user.createdAt,
-    }));
+    return {
+      users: doc[0].data.map((user: UserRepositoryDto) => ({
+        numeroContrato: user.numeroContrato,
+        nomeUsuario: user.nomeUsuario,
+        turma: user.turma,
+        telefone: user.telefone,
+        nomeEscola: user.nomeEscola,
+        email: user.email,
+        isAdm: user.isAdm,
+        senha: user.senha,
+        foto: 'teste',
+        createdAt: user.createdAt,
+      })),
+      count: doc[0].metadata[0].totalCount,
+    };
   }
   async createUser(input: CreateNewUserInput): Promise<void> {
     (await this._userModel.create({ ...input })).save();

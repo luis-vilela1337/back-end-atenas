@@ -12,11 +12,15 @@ import {
   Put,
   Query,
   UseGuards,
+  Param,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@presentation/auth/guards/jwt.guard';
 import { CreateNewUserInputDto } from '@presentation/user/dto/create-new-user.dto';
 import { DeleteUserInputDto } from '@presentation/user/dto/delete-user.dto';
-import { ListAllUsersOutputDto } from '@presentation/user/dto/list-all-users.dto';
+import {
+  ListAllUsersOutputDto,
+  ListUserOutputDto,
+} from '@presentation/user/dto/list-all-users.dto';
 import { UpdateUserInputDto } from '@presentation/user/dto/update-user.dto';
 
 @Controller('v1/user')
@@ -35,22 +39,23 @@ export class UserController {
     return await this._createUserApplication.execute(input);
   }
 
-  @Get('getAll')
-  @UseGuards(JwtAuthGuard)
+  @Get('getAll/:offset/:limit')
+  // @UseGuards(JwtAuthGuard)
   async listAllUser(
-    @Query() username: string,
-    @Query() skip: number,
-    @Query() limit: number,
-  ): Promise<ListAllUsersOutputDto[]> {
-    return await this._listAllUser.execute({ skip, limit, username });
+    @Param('offset') offset: number,
+    @Param('limit') limit: number,
+    @Query('username') username: string,
+  ): Promise<ListAllUsersOutputDto> {
+    return await this._listAllUser.execute({ offset, limit, username });
   }
 
-  @Post()
+  @Get()
   @UseGuards(JwtAuthGuard)
   async listUser(
-    @Body() input: { nomeUsuario: string; email: string },
-  ): Promise<ListAllUsersOutputDto> {
-    return await this._listUser.execute(input);
+    @Param('nomeUsuario') nomeUsuario: string,
+    @Param('email') email: number,
+  ): Promise<ListUserOutputDto> {
+    return await this._listUser.execute({ nomeUsuario, email });
   }
 
   @Put()

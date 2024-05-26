@@ -1,4 +1,8 @@
 export class ListAllUsersOutputDto {
+  users: ListUserOutputDto[];
+  count: number;
+}
+export class ListUserOutputDto {
   numeroContrato: string;
   nomeUsuario: string;
   turma: string;

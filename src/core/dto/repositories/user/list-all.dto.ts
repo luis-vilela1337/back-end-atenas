@@ -1,4 +1,9 @@
 export type ListAllUsersOutputDto = {
+  users: UserRepositoryDto[];
+  count: number;
+};
+
+export type UserRepositoryDto = {
   numeroContrato: string;
   nomeUsuario: string;
   turma: string;

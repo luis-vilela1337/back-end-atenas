@@ -14,7 +14,5 @@ export abstract class IUserRepository {
   abstract updateUser(input: UpdateUserInput): Promise<void>;
   abstract deleteUser(input: DeleteUserInputDto): Promise<boolean>;
   abstract findByUser(input: FindByUserInput): Promise<FindByUserOutput>;
-  abstract findAll(
-    input: FindAllInput,
-  ): Promise<Omit<ListAllUsersOutputDto, 'senha'>[]>;
+  abstract findAll(input: FindAllInput): Promise<ListAllUsersOutputDto>;
 }
