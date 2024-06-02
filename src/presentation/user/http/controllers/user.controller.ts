@@ -3,6 +3,7 @@ import { DeleteUserApplication } from '@application/user/delete-user.application
 import { ListAllUsersApplication } from '@application/user/list-all-user.application';
 import { ListUserApplication } from '@application/user/list-user.application';
 import { UpdateUserApplication } from '@application/user/update-user.application';
+import { MaxFileSizeService } from '@infrastructure/services/file-size.service';
 import {
   Body,
   Controller,
@@ -13,6 +14,10 @@ import {
   Query,
   UseGuards,
   Param,
+  UploadedFiles,
+  UploadedFile,
+  ParseFilePipeBuilder,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from '@presentation/auth/guards/jwt.guard';
 import { CreateNewUserInputDto } from '@presentation/user/dto/create-new-user.dto';
@@ -35,12 +40,29 @@ export class UserController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  async createNewUser(@Body() input: CreateNewUserInputDto): Promise<void> {
-    return await this._createUserApplication.execute(input);
+  async createNewUser(
+    @Body() input: CreateNewUserInputDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /(jpg|jpeg|png|webp)$/,
+        })
+        .addValidator(
+          new MaxFileSizeService({
+            maxSize: 10000,
+          }),
+        )
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    image: Express.Multer.File,
+  ): Promise<void> {
+    return await this._createUserApplication.execute({ ...input, foto: image });
   }
 
   @Get('getAll/:offset/:limit')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async listAllUser(
     @Param('offset') offset: number,
     @Param('limit') limit: number,

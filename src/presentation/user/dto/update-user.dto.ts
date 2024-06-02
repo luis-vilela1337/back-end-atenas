@@ -15,6 +15,5 @@ export class UpdateUserInputDto {
   email: string;
   @IsBoolean()
   isAdm: boolean;
-  @IsString()
-  foto: string;
+  foto: Express.Multer.File;
 }

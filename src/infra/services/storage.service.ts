@@ -1,6 +1,7 @@
 import {
   IStorageService,
   UploadInput,
+  UploadProfileInput,
 } from '@core/abstracts/services/storage.service';
 import { GetSignedUrlConfig, Storage } from '@google-cloud/storage';
 
@@ -12,6 +13,7 @@ export class StorageService implements IStorageService {
     this._storage = new Storage();
     this._bucketName = process.env.BUCKETNAME;
   }
+
   private async _getSignedUrl(fileName: string): Promise<string> {
     const options: GetSignedUrlConfig = {
       version: 'v2',
@@ -44,5 +46,16 @@ export class StorageService implements IStorageService {
     });
 
     return Promise.all(urls);
+  }
+
+  async uploadProfilePicture({
+    contrato,
+    foto,
+    nomeAluno,
+  }: UploadProfileInput): Promise<string> {
+    const filename = `${contrato}-${nomeAluno}-${foto.originalname}`;
+    await this._saveBucketFile(filename, foto.buffer);
+
+    return await this._getSignedUrl(filename);
   }
 }

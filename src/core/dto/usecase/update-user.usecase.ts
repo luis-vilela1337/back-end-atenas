@@ -6,7 +6,7 @@ export type UpdateUserInputDto = {
   nomeEscola: string;
   email: string;
   isAdm: boolean;
-  foto: string;
+  foto: Express.Multer.File;
 };
 
 export type UpdateUserOutputDto = void;

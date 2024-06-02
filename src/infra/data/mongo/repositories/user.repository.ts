@@ -52,7 +52,7 @@ export class UserRepository implements IUserRepository {
         email: user.email,
         isAdm: user.isAdm,
         senha: user.senha,
-        foto: 'teste',
+        foto: user.foto,
         createdAt: user.createdAt,
       })),
       count: doc[0].metadata[0].totalCount,

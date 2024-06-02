@@ -7,7 +7,7 @@ export type CreateNewUserInputDto = {
   email: string;
   senha: string;
   isAdm: boolean;
-  foto: string;
+  foto: Express.Multer.File;
 };
 
 export type CreateNewUserOutputDto = void;

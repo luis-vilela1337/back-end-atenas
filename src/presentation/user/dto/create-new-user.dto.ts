@@ -17,6 +17,5 @@ export class CreateNewUserInputDto {
   senha: string;
   @IsBoolean()
   isAdm: boolean;
-  @IsString()
-  foto: string;
+  foto: Express.Multer.File;
 }
