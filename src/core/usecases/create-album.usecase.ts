@@ -30,6 +30,8 @@ export class CreateAlbumUseCase implements ICreateAlbumUseCase {
       nomeAluno: input.nomeAluno,
       numeroContrato: input.numeroContrato,
       tipoAlbum: input.tipoAlbum,
+      minFotos: input.minFotos,
+      maxFotos: input.maxFotos,
     });
   }
 }

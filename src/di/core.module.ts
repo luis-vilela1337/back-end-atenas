@@ -24,6 +24,7 @@ import { ListAlbumUseCase } from '@core/usecases/list-album.usecase';
     ListAllAlbumUseCase,
     ListAlbumUseCase,
     DeletAlbumUseCase,
+    UpdateUserUseCase,
   ],
   exports: [
     AuthUseCase,
@@ -36,6 +37,7 @@ import { ListAlbumUseCase } from '@core/usecases/list-album.usecase';
     DeletAlbumUseCase,
     ListAllAlbumUseCase,
     ListAlbumUseCase,
+    UpdateUserUseCase,
   ],
 })
 export class CoreModule {}

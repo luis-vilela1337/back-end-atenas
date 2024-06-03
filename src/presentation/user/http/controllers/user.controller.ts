@@ -14,11 +14,12 @@ import {
   Query,
   UseGuards,
   Param,
-  UploadedFiles,
   UploadedFile,
   ParseFilePipeBuilder,
   HttpStatus,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtAuthGuard } from '@presentation/auth/guards/jwt.guard';
 import { CreateNewUserInputDto } from '@presentation/user/dto/create-new-user.dto';
 import { DeleteUserInputDto } from '@presentation/user/dto/delete-user.dto';
@@ -39,6 +40,7 @@ export class UserController {
   ) {}
 
   @Post()
+  @UseInterceptors(FileInterceptor('image'))
   @UseGuards(JwtAuthGuard)
   async createNewUser(
     @Body() input: CreateNewUserInputDto,
@@ -81,9 +83,27 @@ export class UserController {
   }
 
   @Put()
+  @UseInterceptors(FileInterceptor('image'))
   @UseGuards(JwtAuthGuard)
-  async updateUser(@Body() input: UpdateUserInputDto) {
-    return await this._updateUser.execute(input);
+  async updateUser(
+    @Body() input: UpdateUserInputDto,
+    @UploadedFile(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /(jpg|jpeg|png|webp)$/,
+        })
+        .addValidator(
+          new MaxFileSizeService({
+            maxSize: 10000,
+          }),
+        )
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    image: Express.Multer.File,
+  ) {
+    return await this._updateUser.execute({ ...input, foto: image });
   }
 
   @Patch()

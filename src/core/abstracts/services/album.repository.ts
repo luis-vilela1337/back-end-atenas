@@ -2,6 +2,8 @@ export type CreateAlbumInputDto = {
   numeroContrato: string;
   nomeAluno: string;
   tipoAlbum: string;
+  minFotos: number;
+  maxFotos: number;
   evento: string[];
   fotos: string[];
 };
@@ -37,7 +39,7 @@ export type FindAllAlbuns = {
 };
 export abstract class IALbumRepository {
   abstract createAlbum(input: CreateAlbumInputDto): Promise<void>;
-  abstract updateAlbum(input: any): Promise<any>;
+  abstract updateAlbum(input: CreateAlbumInputDto): Promise<any>;
   abstract deleteAlbum(input: FindByAlbumnInputDto): Promise<boolean>;
   abstract findByAlbum(input: FindByAlbumnInputDto): Promise<FindOutputDto>;
   abstract findAll(input: FindAllInputDto): Promise<FindAllAlbuns>;

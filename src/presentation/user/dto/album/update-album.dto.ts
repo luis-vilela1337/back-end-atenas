@@ -1,6 +1,6 @@
 import { ArrayMinSize, IsArray, IsNumber, IsString } from 'class-validator';
 
-export class CreateAlbumInputDto {
+export class UpdateAlbumInputDto {
   @IsString()
   numeroContrato: string;
   @IsString()
@@ -15,4 +15,5 @@ export class CreateAlbumInputDto {
   @IsString({ each: true })
   @ArrayMinSize(1)
   evento: string[];
+  fotos: Array<Express.Multer.File>;
 }

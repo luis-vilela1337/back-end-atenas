@@ -12,6 +12,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { DeleteAlbumApplication } from '@application/album/delete-album.application';
 import { ListAlbumApplication } from '@application/album/list.album.application';
+import { UpdateAlbumApplication } from '@application/album/update-album.application';
 
 @Module({
   imports: [
@@ -31,6 +32,8 @@ import { ListAlbumApplication } from '@application/album/list.album.application'
     ListAllAlbumApplication,
     DeleteAlbumApplication,
     ListAlbumApplication,
+    UpdateUserApplication,
+    UpdateAlbumApplication,
   ],
   exports: [
     AuthApplication,
@@ -43,6 +46,8 @@ import { ListAlbumApplication } from '@application/album/list.album.application'
     ListAllAlbumApplication,
     DeleteAlbumApplication,
     ListAlbumApplication,
+    UpdateUserApplication,
+    UpdateAlbumApplication,
   ],
 })
 export class ApplicationModule {}

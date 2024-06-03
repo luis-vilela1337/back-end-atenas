@@ -41,8 +41,16 @@ export class AlbumRepository implements IALbumRepository {
         }
       : undefined;
   }
-  updateAlbum(input: any): Promise<any> {
-    throw new Error('Method not implemented.');
+  async updateAlbum(input: CreateAlbumInputDto): Promise<any> {
+    await this._albumModel.findOneAndUpdate(
+      {
+        $or: [
+          { numeroContrato: input.numeroContrato },
+          { nomeAluno: input.nomeAluno },
+        ],
+      },
+      { ...input },
+    );
   }
 
   async deleteAlbum(input: any): Promise<boolean> {

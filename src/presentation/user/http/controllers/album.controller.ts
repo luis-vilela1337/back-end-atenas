@@ -13,6 +13,7 @@ import {
   Param,
   Patch,
   Query,
+  Put,
 } from '@nestjs/common';
 import { CreateAlbumInputDto } from '@presentation/user/dto/album/create-album.dto';
 import { ListAllAlbumOutputDto } from '@presentation/user/dto/album/list-all-album.dto';
@@ -23,6 +24,8 @@ import { MaxFileSizeService } from '@infrastructure/services/file-size.service';
 import { ListAlbumApplication } from '@application/album/list.album.application';
 import { DeleteAlbumInputDto } from '@presentation/user/dto/album/delete-album.dto';
 import { DeleteAlbumApplication } from '@application/album/delete-album.application';
+import { UpdateAlbumInputDto } from '@presentation/user/dto/album/update-album.dto';
+import { UpdateAlbumApplication } from '@application/album/update-album.application';
 
 @Controller('v1/albuns')
 export class AlbumController {
@@ -31,6 +34,7 @@ export class AlbumController {
     private readonly _listAllAlbum: ListAllAlbumApplication,
     private readonly _listAlbum: ListAlbumApplication,
     private readonly _deleteAlbum: DeleteAlbumApplication,
+    private readonly _updateAlbum: UpdateAlbumApplication,
   ) {}
 
   @Post()
@@ -58,7 +62,7 @@ export class AlbumController {
   }
 
   @Get('getAll/:offset/:limit')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   async listAllAlbum(
     @Param('offset') offset: number,
     @Param('limit') limit: number,
@@ -80,5 +84,29 @@ export class AlbumController {
   @UseGuards(JwtAuthGuard)
   async deleteAlbum(@Body() input: DeleteAlbumInputDto): Promise<void> {
     return await this._deleteAlbum.execute(input);
+  }
+
+  @Put()
+  @UseInterceptors(FilesInterceptor('image'))
+  @UseGuards(JwtAuthGuard)
+  async updateAlbum(
+    @Body() input: UpdateAlbumInputDto,
+    @UploadedFiles(
+      new ParseFilePipeBuilder()
+        .addFileTypeValidator({
+          fileType: /(jpg|jpeg|png|webp)$/,
+        })
+        .addValidator(
+          new MaxFileSizeService({
+            maxSize: 10000,
+          }),
+        )
+        .build({
+          errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+        }),
+    )
+    image: Array<Express.Multer.File>,
+  ) {
+    return await this._updateAlbum.execute({ ...input, fotos: image });
   }
 }

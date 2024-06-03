@@ -4,6 +4,7 @@ export type CreateNewUserInputDto = {
   turma: string;
   telefone: string;
   nomeEscola: string;
+
   email: string;
   senha: string;
   isAdm: boolean;

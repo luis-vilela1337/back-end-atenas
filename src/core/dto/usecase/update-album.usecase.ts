@@ -1,11 +1,11 @@
-export type CreateAlbumInputDto = {
+export type UpdateAlbumInputDto = {
   numeroContrato: string;
   nomeAluno: string;
   tipoAlbum: string;
+  evento: string[];
   minFotos: number;
   maxFotos: number;
-  evento: string[];
   fotos: Express.Multer.File[];
 };
 
-export type CreateAlbumOutputDto = void;
+export type UpdateAlbumOutputDto = void;
