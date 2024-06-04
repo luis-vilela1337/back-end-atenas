@@ -11,19 +11,29 @@ export class UpdateAlbumUseCase implements IUpdateAlbumUseCase {
     private readonly _storageService: IStorageService,
   ) {}
   async execute(input: UpdateAlbumInputDto): Promise<void> {
-    const urlsSigned = await this._storageService.upload({
-      nomeAluno: input.nomeAluno,
-      contrato: input.numeroContrato,
-      fotos: input.fotos,
-    });
-    await this._albumRepository.updateAlbum({
-      maxFotos: input.maxFotos,
-      minFotos: input.minFotos,
-      evento: input.evento,
-      fotos: urlsSigned,
-      nomeAluno: input.nomeAluno,
-      numeroContrato: input.numeroContrato,
-      tipoAlbum: input.tipoAlbum,
-    });
+    if (input.fotos.length < 0) {
+      await this._albumRepository.updateAlbum({
+        maxFotos: input.maxFotos,
+        minFotos: input.minFotos,
+        evento: input.evento,
+        nomeAluno: input.nomeAluno,
+        numeroContrato: input.numeroContrato,
+        tipoAlbum: input.tipoAlbum,
+      });
+      const urlsSigned = await this._storageService.upload({
+        nomeAluno: input.nomeAluno,
+        contrato: input.numeroContrato,
+        fotos: input.fotos,
+      });
+      await this._albumRepository.updateAlbum({
+        maxFotos: input.maxFotos,
+        minFotos: input.minFotos,
+        evento: input.evento,
+        fotos: urlsSigned,
+        nomeAluno: input.nomeAluno,
+        numeroContrato: input.numeroContrato,
+        tipoAlbum: input.tipoAlbum,
+      });
+    }
   }
 }

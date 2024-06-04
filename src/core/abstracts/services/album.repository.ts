@@ -5,7 +5,7 @@ export type CreateAlbumInputDto = {
   minFotos: number;
   maxFotos: number;
   evento: string[];
-  fotos: string[];
+  fotos?: string[];
 };
 export type FindByAlbumnInputDto = {
   numeroContrato: string;

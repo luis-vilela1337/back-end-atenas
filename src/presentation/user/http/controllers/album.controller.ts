@@ -88,7 +88,7 @@ export class AlbumController {
 
   @Put()
   @UseInterceptors(FilesInterceptor('image'))
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   async updateAlbum(
     @Body() input: UpdateAlbumInputDto,
     @UploadedFiles(
@@ -103,6 +103,7 @@ export class AlbumController {
         )
         .build({
           errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
+          fileIsRequired: false,
         }),
     )
     image: Array<Express.Multer.File>,

@@ -1,19 +1,23 @@
-import { ArrayMinSize, IsArray, IsNumber, IsString } from 'class-validator';
+import { ArrayMinSize, IsArray, IsOptional, IsString } from 'class-validator';
 
 export class UpdateAlbumInputDto {
   @IsString()
   numeroContrato: string;
   @IsString()
-  nomeAluno: string;
+  nomeAluno?: string;
   @IsString()
-  tipoAlbum: string;
-  @IsNumber()
-  minFotos: number;
-  @IsNumber()
-  maxFotos: number;
+  @IsOptional()
+  tipoAlbum?: string;
+  @IsString()
+  @IsOptional()
+  minFotos?: string;
+  @IsString()
+  @IsOptional()
+  maxFotos?: string;
   @IsArray()
+  @IsOptional()
   @IsString({ each: true })
   @ArrayMinSize(1)
-  evento: string[];
-  fotos: Array<Express.Multer.File>;
+  evento?: string[];
+  fotos?: Array<Express.Multer.File>;
 }
