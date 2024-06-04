@@ -17,6 +17,8 @@ export type FindAlbunsOutputDto = {
   tipoAlbum: string;
   evento: string[];
   fotos: string[];
+  maxFotos: number;
+  minFotos: number;
   createdAt: Date;
 };
 export type FindAllInputDto = {
@@ -29,6 +31,8 @@ export type FindOutputDto = {
   nomeAluno: string;
   tipoAlbum: string;
   evento: string[];
+  minFotos: number;
+  maxFotos: number;
   createdAt: Date;
   fotos: string[];
 };

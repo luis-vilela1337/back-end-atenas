@@ -19,6 +19,12 @@ export class Album {
   tipoAlbum: string;
 
   @Prop()
+  maxFotos: number;
+
+  @Prop()
+  minFotos: number;
+
+  @Prop()
   evento: string[];
 
   @Prop()

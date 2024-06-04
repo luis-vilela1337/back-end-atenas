@@ -18,5 +18,7 @@ export type ListAlbumDto = {
   tipoAlbum: string;
   evento: string[];
   fotos: string[];
+  maxFotos: number;
+  minFotos: number;
   createdAt: Date;
 };

@@ -32,6 +32,8 @@ export class AlbumRepository implements IALbumRepository {
     });
     return doc
       ? {
+          maxFotos: doc.maxFotos,
+          minFotos: doc.minFotos,
           numeroContrato: doc.numeroContrato,
           nomeAluno: doc.nomeAluno,
           tipoAlbum: doc.tipoAlbum,
@@ -86,6 +88,8 @@ export class AlbumRepository implements IALbumRepository {
         tipoAlbum: album.tipoAlbum,
         evento: album.evento,
         createdAt: album.createdAt,
+        minFotos: album.minFotos,
+        maxFotos: album.maxFotos,
         fotos: album.fotos,
       })),
       count: doc[0].metadata[0].totalCount,
