@@ -5,6 +5,7 @@ import {
   FindByAlbumnInputDto,
   FindOutputDto,
   IALbumRepository,
+  UpdateAlbumInputDto,
 } from '@core/abstracts/services/album.repository';
 import { InjectModel } from '@nestjs/mongoose';
 import { Album, AlbumDocument } from '../entities/album';
@@ -43,7 +44,7 @@ export class AlbumRepository implements IALbumRepository {
         }
       : undefined;
   }
-  async updateAlbum(input: CreateAlbumInputDto): Promise<any> {
+  async updateAlbum(input: UpdateAlbumInputDto): Promise<any> {
     await this._albumModel.findOneAndUpdate(
       {
         $or: [

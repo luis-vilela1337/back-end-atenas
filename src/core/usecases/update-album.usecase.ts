@@ -11,29 +11,37 @@ export class UpdateAlbumUseCase implements IUpdateAlbumUseCase {
     private readonly _storageService: IStorageService,
   ) {}
   async execute(input: UpdateAlbumInputDto): Promise<void> {
-    if (input.fotos.length < 0) {
-      await this._albumRepository.updateAlbum({
-        maxFotos: input.maxFotos,
-        minFotos: input.minFotos,
-        evento: input.evento,
-        nomeAluno: input.nomeAluno,
-        numeroContrato: input.numeroContrato,
-        tipoAlbum: input.tipoAlbum,
-      });
-      const urlsSigned = await this._storageService.upload({
-        nomeAluno: input.nomeAluno,
-        contrato: input.numeroContrato,
-        fotos: input.fotos,
-      });
-      await this._albumRepository.updateAlbum({
-        maxFotos: input.maxFotos,
-        minFotos: input.minFotos,
-        evento: input.evento,
-        fotos: urlsSigned,
-        nomeAluno: input.nomeAluno,
-        numeroContrato: input.numeroContrato,
-        tipoAlbum: input.tipoAlbum,
-      });
+    const existingAlbum = await this._albumRepository.findByAlbum({
+      nomeAluno: input.nomeAluno,
+      numeroContrato: input.numeroContrato,
+    });
+    const albumToUpdate = {
+      numeroContrato: input.numeroContrato,
+      nomeAluno: input.nomeAluno,
+      tipoAlbum: input.tipoAlbum ? input.tipoAlbum : existingAlbum.tipoAlbum,
+      evento: input.evento ? input.evento : existingAlbum.evento,
+      minFotos: input.minFotos ? input.minFotos : existingAlbum.minFotos,
+      maxFotos: input.maxFotos ? input.maxFotos : existingAlbum.maxFotos,
+      createdAt: existingAlbum.createdAt,
+    };
+
+    if (input.fotos.length <= 0) {
+      await this._albumRepository.updateAlbum(albumToUpdate);
     }
+
+    const urlsSigned = await this._storageService.upload({
+      nomeAluno: input.nomeAluno,
+      contrato: input.numeroContrato,
+      fotos: input.fotos,
+    });
+    await this._albumRepository.updateAlbum({
+      maxFotos: albumToUpdate.maxFotos,
+      minFotos: albumToUpdate.minFotos,
+      evento: albumToUpdate.evento,
+      fotos: urlsSigned,
+      nomeAluno: albumToUpdate.nomeAluno,
+      numeroContrato: albumToUpdate.numeroContrato,
+      tipoAlbum: albumToUpdate.tipoAlbum,
+    });
   }
 }

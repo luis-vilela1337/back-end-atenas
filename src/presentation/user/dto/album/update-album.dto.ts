@@ -4,7 +4,7 @@ export class UpdateAlbumInputDto {
   @IsString()
   numeroContrato: string;
   @IsString()
-  nomeAluno?: string;
+  nomeAluno: string;
   @IsString()
   @IsOptional()
   tipoAlbum?: string;
